@@ -1,0 +1,17 @@
+services:
+  catungku-mysql:
+    image: mysql:8
+    restart: always
+    ports:
+      - "${DB_PORT}:3306"
+    volumes:
+      - ./docker/mysql/volumes/data:/var/lib/mysql
+    environment:
+        - MYSQL_DATABASE=${DB_DATABASE}
+        - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+    networks:
+      - catungku-backend
+
+networks:
+  catungku-backend:
+    driver: bridge
