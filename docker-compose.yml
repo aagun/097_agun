@@ -1,5 +1,5 @@
 services:
-  catungku-mysql:
+  mysql:
     image: mysql:8
     restart: always
     ports:
@@ -10,8 +10,8 @@ services:
         - MYSQL_DATABASE=${DB_DATABASE}
         - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
     networks:
-      - catungku-backend
+      - backend
 
 networks:
-  catungku-backend:
+  backend:
     driver: bridge
