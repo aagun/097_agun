@@ -10,6 +10,13 @@ use Tests\TestCase;
 class RoleTest extends TestCase
 {
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        DB::delete("delete from roles");
+    }
+
     public function testSeeder()
     {
         $this->seed(RoleSeeder::class);
@@ -36,7 +43,15 @@ class RoleTest extends TestCase
 
     public function testInsertMany()
     {
-        $roles = [['name' => 'RO_TEST', 'description' => 'Tester'], ['name' => 'RO_SAMPLE', 'description' => 'Sample']];
+        $roles = [
+            [
+                'name' => 'RO_TEST',
+                'description' => 'Tester'],
+            [
+                'name' => 'RO_SAMPLE',
+                'description' => 'Sample'
+            ]
+        ];
 
         Role::query()->insert($roles);
 
@@ -45,10 +60,14 @@ class RoleTest extends TestCase
 
     }
 
-    protected function setUp(): void
+    public function testSoftDelete()
     {
-        parent::setUp();
-        DB::delete('delete from roles');
+        $this->seed(RoleSeeder::class);
+
+        $role = Role::find(2); // role admin
+        $role->delete();
+
+        self::assertTrue($role->trashed());
     }
 
 
