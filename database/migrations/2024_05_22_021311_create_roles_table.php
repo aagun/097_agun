@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('roles', function (Blueprint $table) {
-            $table->integerIncrements('id');
+            $table->integerIncrements('id')->nullable(false)->primary();
             $table->string('name')->nullable(false);
             $table->text('description')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();
-            $table->datetimes();
-            $table->softDeletesDatetime();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
