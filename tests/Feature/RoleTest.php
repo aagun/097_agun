@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Role;
 use Database\Seeders\RoleSeeder;
+use Database\Seeders\UserSeeder;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
@@ -14,6 +15,7 @@ class RoleTest extends TestCase
     {
         parent::setUp();
 
+        DB::delete("delete from users");
         DB::delete("delete from roles");
     }
 
@@ -68,6 +70,21 @@ class RoleTest extends TestCase
         $role->delete();
 
         self::assertTrue($role->trashed());
+    }
+
+    public function testOneToMany()
+    {
+        // Arrange
+        $this->seed(RoleSeeder::class); // Generate 1 data role
+        $this->seed(UserSeeder::class); // Generate 10 data users
+
+        // Action
+        $role = Role::find(1); // get role user
+
+        // Assert
+        self::assertNotNull($role);
+        self::assertNotNull($role->users);
+        self::assertEquals(10, $role->users->count());
     }
 
 
