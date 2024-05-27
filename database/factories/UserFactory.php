@@ -32,7 +32,6 @@ class UserFactory extends Factory
             'gender' => fake()->shuffle(['l', 'p'])[0],
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'role_id' => 1,
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];

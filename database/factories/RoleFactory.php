@@ -16,10 +16,6 @@ class RoleFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'id' => 1,
-            'name' => 'RO_USER',
-            'description' => 'User'
-        ];
+        return [];
     }
 }
