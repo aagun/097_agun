@@ -20,8 +20,6 @@ class TransactionSeeder extends Seeder
             ->whereNot('id', $employee_id)
             ->get();
 
-        Log::info('User Id(s): ' . $user_ids);
-
         Transaction::factory()
             ->count(240)
             ->sequence(function () use ($employee_id, $user_ids) {
