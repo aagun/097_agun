@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TransactionType;
 use App\Models\Transaction;
 use App\Models\User;
 use Database\Seeders\RoleSeeder;
@@ -30,7 +31,7 @@ class TransactionTest extends TestCase
         $user = User::whereNot('id', $employee->id)->get()->random();
 
         $transaction = new Transaction();
-        $transaction->transaction_type = 'NEW_DEBT';
+        $transaction->transaction_type = TransactionType::NEW_DEBT;
         $transaction->transaction_date = now();
         $transaction->transaction_amount = 1_200_000;
         $transaction->installment_number = null;

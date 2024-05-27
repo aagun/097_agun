@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('user_id', 36)->nullable();
             $table->string('employee_id', 36)->nullable();
             $table->timestamp('transaction_date')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->enum('transaction_type', ['NEW_DEBT', 'PAY_DEBT']);
+            $table->enum('transaction_type', ['new_debt', 'pay_debt']);
             $table->text('description')->nullable();
             $table->unsignedInteger('installment_number')->nullable();
             $table->unsignedBigInteger('transaction_amount');

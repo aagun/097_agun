@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\TransactionType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,9 +17,10 @@ class TransactionFactory extends Factory
      */
     public function definition(): array
     {
-        $txn_type = $this->faker->randomElement(['NEW_DEBT', 'PAY_DEBT']);
+        $txn_types = [TransactionType::NEW_DEBT, TransactionType::PAY_DEBT];
+        $txn_type = $this->faker->randomElement($txn_types);
         $installment_number = null;
-        if ($txn_type == 'PAY_DEBT') {
+        if ($txn_type == TransactionType::PAY_DEBT) {
             $installment_number = $this->faker->numberBetween(1, 12);
         }
 
