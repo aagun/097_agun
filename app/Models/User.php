@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -20,6 +19,23 @@ class User extends Authenticatable
     protected $primaryKey = 'id';
     protected $keyType = "string";
     public $incrementing = false;
+    protected $with = ['role'];
+
+    protected $fillable = [
+        'full_name',
+        'nickname',
+        'birth_date',
+        'phone_number',
+        'gender',
+        'address',
+        'email',
+        'password',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
     public function role(): BelongsTo
     {
@@ -36,37 +52,11 @@ class User extends Authenticatable
         return $this->hasMany(Transaction::class, 'employee_id', 'id');
     }
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'full_name',
-        'nickname',
-        'birth_date',
-        'phone_number',
-        'gender',
-        'address',
-        'email',
-        'password',
-    ];
+    public function debts(): HasMany
+    {
+        return $this->hasMany(Debt::class, 'user_id', 'id');
+    }
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
