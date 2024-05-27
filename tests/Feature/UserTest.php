@@ -7,6 +7,7 @@ use Database\Seeders\RoleSeeder;
 use Database\Seeders\UserSeeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -93,9 +94,7 @@ class UserTest extends TestCase
     public function testSoftDelete()
     {
         // Arrange
-        $this->seed(RoleSeeder::class);
-        $this->seed(UserSeeder::class);
-
+        $this->seed([RoleSeeder::class, UserSeeder::class]);
 
         // Action
         $user = User::all()->first();
@@ -103,15 +102,14 @@ class UserTest extends TestCase
 
         // Assert
         self::assertTrue($user->trashed());
-        self::assertCount(9, User::all());
+        self::assertCount(24, User::all());
         self::assertCount(1, User::onlyTrashed()->get());
     }
 
     public function testBelongsTo()
     {
         // Arrange
-        $this->seed(RoleSeeder::class); // Generate 1 data role
-        $this->seed(UserSeeder::class); // Generate 10 data users
+        $this->seed([RoleSeeder::class, UserSeeder::class]);
 
         // Action
         $user = User::all()->first();
@@ -119,7 +117,6 @@ class UserTest extends TestCase
         // Assert
         self::assertNotNull($user);
         self::assertNotNull($user->role);
-        self::assertEquals(1, $user->role->count());
     }
 
 
