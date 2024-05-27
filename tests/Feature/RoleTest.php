@@ -75,16 +75,15 @@ class RoleTest extends TestCase
     public function testOneToMany()
     {
         // Arrange
-        $this->seed(RoleSeeder::class); // Generate 1 data role
-        $this->seed(UserSeeder::class); // Generate 10 data users
+        $this->seed([RoleSeeder::class, UserSeeder::class]);
 
         // Action
-        $role = Role::find(1); // get role user
+        $role = Role::find(2); // get role user
 
         // Assert
         self::assertNotNull($role);
         self::assertNotNull($role->users);
-        self::assertEquals(10, $role->users->count());
+        self::assertEquals(24, $role->users->count());
     }
 
 
