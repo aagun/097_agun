@@ -15,7 +15,7 @@ class DebtTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
+        DB::delete('delete from detail_transactions');
         DB::delete('delete from debts');
         DB::delete('delete from users');
         DB::delete('delete from roles');

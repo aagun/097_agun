@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Transaction extends Model
 {
@@ -17,6 +17,16 @@ class Transaction extends Model
     protected $primaryKey = 'id';
     protected $keyType = 'string';
     public $incrementing = false;
+    protected $fillable = [
+        'user_id',
+        'employee_id',
+        'transaction_date',
+        'transaction_type',
+        'description',
+        'installment_number',
+        'total_installments',
+        'transaction_amount',
+    ];
 
     public function customer(): BelongsTo
     {
@@ -26,6 +36,12 @@ class Transaction extends Model
     public function employee(): BelongsTo
     {
         return $this->belongsTo(User::class, 'employee_id', 'id');
+    }
+
+    public function detailDebts(): BelongsToMany
+    {
+        return $this->belongsToMany(Debt::class, 'detail_transactions', 'transaction_id', 'debt_id')
+            ->using(DetailTransaction::class);
     }
 
     protected function casts(): array

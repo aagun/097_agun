@@ -18,7 +18,7 @@ class Installment extends Model
     public $incrementing = 'false';
 
     protected $fillable = [
-        'installments_number',
+        'installment_number',
         'amount',
         'due_date',
         'status',
