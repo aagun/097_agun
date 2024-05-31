@@ -25,7 +25,7 @@ class RoleTest extends TestCase
 
         $roles = Role::all();
 
-        self::assertCount(2, $roles);
+        self::assertCount(25, $roles);
     }
 
     public function testInsert()

@@ -16,12 +16,22 @@ class RoleSeeder extends Seeder
         $roles = array('User', 'Admin');
 
         Role::factory()
-            ->count(2)
-            ->sequence(fn (Sequence $sequence) => [
-                'id' => $sequence->index + 1,
-                'name' => 'RO_' . strtoupper($roles[$sequence->index == 0 ? 0 : 1]),
-                'description' => $roles[$sequence->index == 0 ? 0 : 1]
-            ])
+            ->count(25)
+            ->sequence(function (Sequence $sequence) use ($roles) {
+                $role = null;
+
+                if ($sequence->index < 2) {
+                    $role = $roles[ $sequence->index == 0 ? 0 : 1 ];
+                } else {
+                    $role = fake()->text(15);
+                }
+
+                return [
+                    'id' => $sequence->index + 1,
+                    'name' => 'RO_' . convertString($role),
+                    'description' => $role
+                ];
+            })
             ->create();
     }
 }
