@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Validation\Rule;
 use App\Rules\ArrayHasAtLeastOneElement;
 
-class RoleCreateBatchRequest extends BaseExceptionRequest
+class RoleCreateBatchRequest extends BaseRequest
 {
     public function rules(): array
     {

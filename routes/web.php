@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -12,19 +13,19 @@ Route::fallback(function () {
 });
 
 Route::prefix('roles')->controller(RoleController::class)->group(function () {
-    // Create
     Route::post('/', 'createRole');
     Route::post('/batch', 'createBatchRole');
-
-    // View
     Route::post('/search', 'searchRoles');
-
-    // Delete
     Route::post('/destroy', 'deleteBatchRole');
     Route::delete('/destroy/{id}', 'deleteRole');
-
-    // Edit
     Route::put('/{id}', 'updateRole');
+    Route::get('/{id}', 'getRole');
+});
 
-    Route::get('/{id}', 'getRole')->whereNumber('id');
+Route::prefix('users')->controller(UserController::class)->group(function () {
+    Route::post('/', 'createUser');
+    Route::post('/search', 'searchUser');
+    Route::put('/{id}', 'updateUser');
+    Route::delete('/{id}', 'deleteUser');
+    Route::get('/{id}', 'getUser');
 });

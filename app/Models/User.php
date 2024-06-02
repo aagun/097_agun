@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Carbon;
+use App\Enums\Gender;
 
 class User extends Authenticatable
 {
@@ -20,7 +23,7 @@ class User extends Authenticatable
     protected $keyType = "string";
     public $incrementing = false;
     protected $with = ['role'];
-
+    protected $dateFormat = 'Y-m-d';
     protected $fillable = [
         'full_name',
         'nickname',
@@ -30,12 +33,21 @@ class User extends Authenticatable
         'address',
         'email',
         'password',
+        'role_id'
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
     ];
+
+    protected function birthDate(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value, array $attributes) => Carbon::parse($attributes['birth_date']),
+            set: fn (mixed $value) => Carbon::parse($value)
+        );
+    }
 
     public function role(): BelongsTo
     {
@@ -62,6 +74,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'gender' => Gender::class
         ];
     }
 }

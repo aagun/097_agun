@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Database\Seeders\RoleSeeder;
 use App\Models\Role;
@@ -68,6 +66,13 @@ class RoleServiceTest extends TestCase
         $update_role = $this->roleService->updateRole($id, $data);
 
         self::assertNotNull($update_role);
+    }
+
+    public function testSelectIdByName()
+    {
+        $this->seed(RoleSeeder::class);
+        $role_id = $this->roleService->selectIdByName('RO_USER');
+        self::assertEquals(1, $role_id);
     }
 
 

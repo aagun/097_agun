@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Response;
+
 if (!function_exists('show_route')) {
 
     function generatePhoneNumber(): string
@@ -14,5 +17,18 @@ if (!function_exists('show_route')) {
         $input = preg_replace('/\./', '', $input);
         $input = preg_replace('/\s+/', '_', $input);
         return $input;
+    }
+
+    function validateExistenceDataById(mixed $id, mixed $serviceClass): void
+    {
+        if (!$serviceClass->exists($id)) {
+            throw new HttpResponseException(response([
+                "errors" => [
+                    "message" => [
+                        "The id [$id] is not found"
+                    ]
+                ]
+            ], Response::HTTP_NOT_FOUND));
+        }
     }
 }

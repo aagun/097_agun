@@ -7,7 +7,6 @@ use App\Models\Role;
 use App\Http\Requests\PageableRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use App\Http\Requests\RoleCreateRequest;
 
 class RoleServiceImpl implements RoleService
 {
@@ -88,10 +87,26 @@ class RoleServiceImpl implements RoleService
             ->exists();
     }
 
+    public function exists(int $id): bool
+    {
+        return Role::query()
+            ->where('id', '=', $id)
+            ->exists();
+    }
+
     public function updateRole(int $id, array $data): Role
     {
         Role::query()->where('id', $id)->update($data);
         return Role::find($id);
+    }
+
+    public function selectIdByName(string $name): int
+    {
+        $role = Role::query()
+            ->select(['id'])
+            ->where('name', '=', 'RO_USER')
+            ->first();
+        return $role->id;
     }
 
 }

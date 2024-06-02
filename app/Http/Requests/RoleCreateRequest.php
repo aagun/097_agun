@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Validation\Rule;
 
-class RoleCreateRequest extends BaseExceptionRequest
+class RoleCreateRequest extends BaseRequest
 {
     public function rules(): array
     {

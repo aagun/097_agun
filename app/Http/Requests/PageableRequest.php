@@ -4,8 +4,9 @@ namespace App\Http\Requests;
 
 use App\Rules\CaseInsensitiveOrder;
 
-class PageableRequest extends BaseExceptionRequest
+class PageableRequest extends BaseRequest
 {
+
     public function rules(): array
     {
         return [

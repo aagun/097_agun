@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Http\Requests\PageableRequest;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Models\Role;
-use App\Http\Requests\RoleCreateRequest;
 
 interface RoleService
 {
@@ -21,7 +20,11 @@ interface RoleService
 
     public function deleteById(int $id): void;
 
+    public function exists(int $id): bool;
+
     public function existNotTrashedById(int $id): bool;
 
     public function updateRole(int $id, array $data): Role;
+
+    public function selectIdByName(string $name): int;
 }

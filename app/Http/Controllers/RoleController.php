@@ -11,11 +11,8 @@ use App\Services\RoleService;
 use App\Http\Requests\PageableRequest;
 use App\Http\Requests\RoleDeleteBatchRequest;
 use App\Http\Resources\SuccessResponseResource;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use App\Http\Resources\RoleResource;
 use App\Http\Resources\SuccessPageableResponseCollection;
-use App\Enums\HTTPResponseStatus;
-use App\Http\Resources\BasePageableResponseCollection;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class RoleController extends Controller
@@ -31,7 +28,7 @@ class RoleController extends Controller
     {
         $resource = $this->roleService->findAllRolePageable($request);
         return new SuccessPageableResponseCollection(
-            'List roles',
+            'List role',
             $resource,
             RoleResource::class
         );
@@ -78,7 +75,7 @@ class RoleController extends Controller
 
     public function deleteRole(Request $request, int $roleId): Response
     {
-        self::isRoleExists($roleId);
+        validateExistenceDataById($roleId, $this->roleService);
 
         $this->roleService->deleteById($roleId);
         return response(new SuccessResponseResource('The record has been successfully deleted.'));
@@ -86,23 +83,10 @@ class RoleController extends Controller
 
     public function updateRole(RoleCreateRequest $request, int $id): Response
     {
-        self::isRoleExists($id);
+        validateExistenceDataById($id, $this->roleService);
 
         $data = $request->validated();
         $role = $this->roleService->updateRole($id, $data);
         return response(new SuccessResponseResource('The record has been successfully updated.', new RoleResource($role)));
-    }
-
-    private function isRoleExists(int $id): void
-    {
-        if (!$this->roleService->existNotTrashedById($id)) {
-            throw new HttpResponseException(response([
-                "errors" => [
-                    "message" => [
-                        "The id [$id] is not found"
-                    ]
-                ]
-            ], Response::HTTP_NOT_FOUND));
-        }
     }
 }
