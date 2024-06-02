@@ -35,6 +35,18 @@ class RoleControllerTest extends TestCase
             );
     }
 
+    public function testGetRole()
+    {
+        $this->seed(RoleSeeder::class);
+
+        $id = $this->roleService->selectIdByName('RO_USER');
+
+        $this->get("/roles/$id")
+            ->assertStatus(Response::HTTP_OK)
+            ->assertJsonFragment(['name' => 'RO_USER']);
+
+    }
+
     public function testCreateRoleSuccess()
     {
         // Arrange
@@ -192,6 +204,8 @@ class RoleControllerTest extends TestCase
                 ->etc());
     }
 
+
+    private RoleService $roleService;
 
     protected function setUp(): void
     {

@@ -89,4 +89,13 @@ class RoleController extends Controller
         $role = $this->roleService->updateRole($id, $data);
         return response(new SuccessResponseResource('The record has been successfully updated.', new RoleResource($role)));
     }
+
+    public function getRole(int $id): Response
+    {
+        $role = $this->roleService->findRoleById($id);
+        return response(new SuccessResponseResource(
+            'Role found',
+            new RoleResource($role)
+        ));
+    }
 }
