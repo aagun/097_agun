@@ -22,6 +22,14 @@ class RoleServiceImpl implements RoleService
         return Role::find($id);
     }
 
+    public function findRoleByName(string $name): Role
+    {
+        return Role::query()
+            ->where('name', $name)
+            ->get()
+            ->first();
+    }
+
     public function findAllRolePageable(PageableRequest $request): LengthAwarePaginator
     {
         $limit = isset($request->limit) ? $request->limit : 10;

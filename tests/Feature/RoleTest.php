@@ -78,7 +78,7 @@ class RoleTest extends TestCase
         $this->seed([RoleSeeder::class, UserSeeder::class]);
 
         // Action
-        $role = Role::find(2); // get role user
+        $role = Role::find(1); // get role user
 
         // Assert
         self::assertNotNull($role);

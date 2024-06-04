@@ -93,8 +93,15 @@ class UserServiceImpl implements UserService
     public function findOneRandom(): User
     {
         return User::all()
-            ->random()
-            ->first();
+            ->random();
+    }
+
+    public function countByRoleName(string $role_name): int
+    {
+        return User::query()
+            ->join('roles', 'users.role_id', 'roles.id')
+            ->where('roles.name', $role_name)
+            ->count();
     }
 
 }

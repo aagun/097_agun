@@ -21,4 +21,6 @@ interface DebtService
     public function exists(string $id): bool;
 
     public function existByIdAndDebtType(string $id, DebtType $debt_type): bool;
+
+    public function sumRemainingDebt(): int;
 }

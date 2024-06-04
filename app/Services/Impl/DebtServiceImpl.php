@@ -62,8 +62,10 @@ class DebtServiceImpl implements DebtService
         return Debt::where('id', $id)->exists();
     }
 
-    public function updateDebt()
+    public function sumRemainingDebt(): int
     {
-
+        return Debt::query()
+            ->select('remaining_debt')
+            ->sum('remaining_debt');
     }
 }

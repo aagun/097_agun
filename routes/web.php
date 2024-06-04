@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\MetadataController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,4 +41,10 @@ Route::prefix('transactions')
     ->controller(TransactionController::class)
     ->group(function () {
         Route::post('/', 'createBatchTransaction');
+    });
+
+Route::prefix('metadata')
+    ->controller(MetadataController::class)
+    ->group(function () {
+       Route::get('/', 'getMetadata');
     });

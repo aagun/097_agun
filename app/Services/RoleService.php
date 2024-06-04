@@ -10,6 +10,8 @@ interface RoleService
 {
     public function findRoleById(int $id): Role;
 
+    public function findRoleByName(string $name): Role;
+
     public function findAllRolePageable(PageableRequest $request): LengthAwarePaginator;
 
     public function saveRole(array $data): void;

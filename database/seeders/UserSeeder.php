@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
         User::factory()
             ->count(25)
             ->sequence(fn (Sequence $sequence) => [
-                'role_id' => $sequence->index == 0 ? 1 : 2
+                'role_id' => $sequence->index == 0 ? 2 : 1
             ])
             ->create();
     }

@@ -21,4 +21,6 @@ interface UserService
     public function findUserById(string $id): User;
 
     public function findOneRandom(): User;
+
+    public function countByRoleName(string $role_name): int;
 }
