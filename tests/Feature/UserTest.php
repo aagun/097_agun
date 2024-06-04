@@ -7,18 +7,22 @@ use Database\Seeders\RoleSeeder;
 use Database\Seeders\UserSeeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Tests\TestCase;
+use App\Services\UserService;
 
 class UserTest extends TestCase
 {
+    private UserService $userService;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         DB::delete('delete from users');
         DB::delete('delete from roles');
+
+        $this->userService = $this->app->make(UserService::class);
     }
 
     public function testInsert()
@@ -119,5 +123,11 @@ class UserTest extends TestCase
         self::assertNotNull($user->role);
     }
 
+    public function testCountByRoleName()
+    {
+        $this->seed([RoleSeeder::class, UserSeeder::class]);
+        $total_ordinary_users = $this->userService->countByRoleName('RO_USER');
+        self::assertEquals(24, $total_ordinary_users);
+    }
 
 }
