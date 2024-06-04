@@ -42,6 +42,7 @@ class TransactionController extends Controller
             $transaction->employee_id = Auth::id();
             $transaction->transaction_amount = $item[ 'transaction_amount' ];
             $transaction->description = $item[ 'description' ];
+            $transaction->transaction_type = $item[ 'transaction_type' ];
 
             /*
             |-------------------------------------------------------
@@ -136,7 +137,6 @@ class TransactionController extends Controller
         $debt->remaining_debt = $item[ 'transaction_amount' ];
         $debt->save();
 
-        $transaction->transaction_type = $item[ 'transaction_type' ];
         $transaction->total_installments = match ($item[ 'debt_type' ]) {
             DebtType::MONTHLY => $item[ 'total_installments' ],
             default => 1,
