@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Transaction extends Model
 {
-    use HasUuids, HasFactory;
+    use HasUuids, HasFactory, SoftDeletes;
 
     protected $table = 'transactions';
     protected $primaryKey = 'id';
@@ -41,7 +42,10 @@ class Transaction extends Model
     public function detailDebts(): BelongsToMany
     {
         return $this->belongsToMany(Debt::class, 'detail_transactions', 'transaction_id', 'debt_id')
-            ->using(DetailTransaction::class);
+            ->using(DetailTransaction::class)
+            ->wherePivot('deleted_at', null)
+            ->withPivot('transaction_id', 'debt_id')
+            ->withTimestamps();
     }
 
     protected function casts(): array

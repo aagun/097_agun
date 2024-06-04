@@ -178,6 +178,4 @@ class UserControllerTest extends TestCase
         $this->roleService = $this->app->make(RoleService::class);
         $this->userService = $this->app->make(UserService::class);
     }
-
-
 }

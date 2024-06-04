@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('roles', function (Blueprint $table) {
-            $table->string('name')
-                ->nullable(false)
-                ->unique('roles_name_unique')
-                ->change();
+            $table->dropColumn('name');
+            $table->string('redefined_name');
+            $table->renameColumn('redefined_name', 'name');
+            $table->unique('name');
         });
     }
 
@@ -26,9 +26,9 @@ return new class extends Migration
     {
         Schema::table('roles', function (Blueprint $table) {
             $table->dropUnique('roles_name_unique');
-            $table->string('name')
-                ->nullable(false)
-                ->change();
+            $table->dropColumn('name');
+            $table->string('redefined_name');
+            $table->renameColumn('redefined_name', 'name');
         });
     }
 };

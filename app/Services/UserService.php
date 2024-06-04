@@ -19,4 +19,6 @@ interface UserService
     public function findUserPageable(PageableRequest $request): LengthAwarePaginator;
 
     public function findUserById(string $id): User;
+
+    public function findOneRandom(): User;
 }

@@ -90,4 +90,11 @@ class UserServiceImpl implements UserService
         return User::find($id);
     }
 
+    public function findOneRandom(): User
+    {
+        return User::all()
+            ->random()
+            ->first();
+    }
+
 }

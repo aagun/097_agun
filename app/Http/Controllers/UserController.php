@@ -33,9 +33,7 @@ class UserController extends Controller
         $this->userService->saveUser($payload);
 
         return response(
-            new SuccessResponseResource(
-                'The record has been successfully created.'
-            ),
+            new SuccessResponseResource('The record has been successfully created.'),
             Response::HTTP_CREATED
         );
     }

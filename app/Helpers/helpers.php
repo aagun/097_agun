@@ -31,4 +31,9 @@ if (!function_exists('show_route')) {
             ], Response::HTTP_NOT_FOUND));
         }
     }
+
+    function toEnum($value, $enumClass)
+    {
+        return $value instanceof $enumClass ? $value : $enumClass::from($value);
+    }
 }

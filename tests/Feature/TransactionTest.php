@@ -14,7 +14,6 @@ use Database\Seeders\RoleSeeder;
 use Database\Seeders\TransactionSeeder;
 use Database\Seeders\UserSeeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 class TransactionTest extends TestCase
@@ -92,7 +91,9 @@ class TransactionTest extends TestCase
 
         $debt = new Debt([
             'user_id' => $user->id,
-            'debt_type' => DebtType::MONTHLY
+            'debt_type' => DebtType::MONTHLY,
+            'total_debt' => $transaction->transaction_amount,
+            'remaining_debt' => $transaction->transaction_amount
         ]);
         $debt->save();
 

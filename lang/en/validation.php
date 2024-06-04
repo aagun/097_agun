@@ -161,7 +161,13 @@ return [
     'uuid' => 'The :attribute field must be a valid UUID.',
     'custom.array_has_at_least_one_element' => 'The :attribute field must have at least one element.',
     'custom.case_insensitive_order' => 'The :attribute must be either ASC or DESC',
-
+    'custom.transaction_payload.required' => 'The :attribute is required.',
+    'custom.transaction_payload.required_newdebt' => 'The :attribute is required. Because transaction type is :transaction_type and debt type is :debt_type',
+    'custom.transaction_payload.required_paydebt' => 'The :attribute is required. Because transaction type is :transaction_type',
+    'custom.transaction_payload.required_paydebt_debtid' => 'The :attribute is required. Because transaction type is :transaction_type and debt type is :debt_type',
+    'custom.transaction_payload.min_newdebt' => 'The :attribute must be at least :min. Because transaction type is :transaction_type and debt type is :debt_type',
+    'custom.transaction_insufficient_balance' => 'The :attribute is not sufficient',
+    'custom.transaction' => 'Transaction is not valid',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

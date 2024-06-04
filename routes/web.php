@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TransactionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,13 +25,6 @@ Route::prefix('roles')
         Route::get('/{id}', 'getRole');
     });
 
-Route::prefix('users')->controller(UserController::class)->group(function () {
-    Route::post('/', 'createUser');
-    Route::post('/search', 'searchUser');
-    Route::put('/{id}', 'updateUser');
-    Route::delete('/{id}', 'deleteUser');
-    Route::get('/{id}', 'getUser');
-});
 Route::prefix('users')
     ->controller(UserController::class)
     ->group(function () {
@@ -39,4 +33,10 @@ Route::prefix('users')
         Route::put('/{id}', 'updateUser');
         Route::get('/{id}', 'getUser');
         Route::delete('/{id}', 'deleteUser');
+    });
+
+Route::prefix('transactions')
+    ->controller(TransactionController::class)
+    ->group(function () {
+        Route::post('/', 'createBatchTransaction');
     });

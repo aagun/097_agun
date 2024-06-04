@@ -23,7 +23,7 @@ class RoleSeeder extends Seeder
                 if ($sequence->index < 2) {
                     $role = $roles[ $sequence->index == 0 ? 0 : 1 ];
                 } else {
-                    $role = fake()->text(15);
+                    $role = fake()->text(35);
                 }
 
                 return [
