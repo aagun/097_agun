@@ -48,13 +48,14 @@ class UserControllerTest extends TestCase
     public function testSearchUser()
     {
         $this->seed([RoleSeeder::class, UserSeeder::class]);
-        $this->post('/users/search', [
+        $response = $this->post('/users/search', [
             'search' => [],
             'sort' => 'id',
             'order' => 'desc',
             'limit' => 10,
             'offset' => 1
-        ])->assertStatus(Response::HTTP_OK);
+        ]);
+        $response->assertStatus(Response::HTTP_OK);
     }
 
     public function testUpdateUserSuccess()

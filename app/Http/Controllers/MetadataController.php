@@ -9,6 +9,13 @@ use App\Enums\TransactionType;
 use App\Http\Resources\SuccessResponseResource;
 use App\Services\TransactionService;
 use Illuminate\Http\Response;
+use App\Http\Requests\PageableRequest;
+use App\Http\Resources\SuccessPageableResponseCollection;
+use App\Http\Resources\DailyIncomeResource;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Resources\FailResponseResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class MetadataController extends Controller
 {
@@ -41,6 +48,44 @@ class MetadataController extends Controller
                     'last_income' => $last_income
                 ]
             )
+        );
+    }
+
+    public function getDailyIncome(PageableRequest $request): ResourceCollection
+    {
+        if (isset($request->search)) {
+            $rules = [
+                'total_income' => ['sometimes', 'number'],
+                'transaction_date' => ['sometimes', 'date', 'date_format:Y-m-d']
+            ];
+
+            $validator = Validator::make($request->search, $rules);
+
+            if ($validator->fails()) {
+                throw new HttpResponseException(
+                    response(
+                        new FailResponseResource(
+                            'error',
+                            $validator->getMessageBag()
+                        )
+                    )
+                );
+            }
+        }
+
+        $list_daily_income = $this->transactionService->dailyIncome($request);
+        return new SuccessPageableResponseCollection(
+            'metadata',
+            $list_daily_income,
+            DailyIncomeResource::class
+        );
+    }
+
+    public function getMonthlyIncome(): Response
+    {
+        $monthly_income = $this->transactionService->monthlyIncome();
+        return response(
+            new SuccessResponseResource('metadata monthly', $monthly_income)
         );
     }
 }

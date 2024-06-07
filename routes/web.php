@@ -47,4 +47,6 @@ Route::prefix('metadata')
     ->controller(MetadataController::class)
     ->group(function () {
        Route::get('/', 'getMetadata');
+       Route::post('/daily', 'getDailyIncome');
+       Route::post('/monthly', 'getMonthlyIncome');
     });

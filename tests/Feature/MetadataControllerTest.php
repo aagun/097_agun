@@ -25,7 +25,25 @@ class MetadataControllerTest extends TestCase
                 ->has('data', fn (AssertableJson $json) => $json->hasAll(['total_users', 'total_debt', 'last_income']))
                 ->etc()
             );
+    }
 
+    public function testDailyIncome()
+    {
+        $request = [
+            'search' => [],
+            'sort' => 'id',
+            'order' => 'desc',
+            'limit' => 10,
+            'offset' => 1
+        ];
+
+        $response = $this->post('/metadata/daily', $request);
+        $response
+            ->assertStatus(Response::HTTP_OK)
+            ->assertJson(function (AssertableJson $json) {
+                return $json->hasAll(['status', 'message', 'data', 'total', 'errors'])
+                    ->whereNot('data', null);
+            });
     }
 
     protected function setUp(): void
