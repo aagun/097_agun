@@ -14,4 +14,6 @@ interface TransactionService
     public function dailyIncome(PageableRequest $request): LengthAwarePaginator;
 
     public function monthlyIncome(): array | Collection;
+
+    public function searchTransaction(PageableRequest $request): LengthAwarePaginator;
 }

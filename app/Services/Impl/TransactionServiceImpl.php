@@ -32,6 +32,20 @@ class TransactionServiceImpl implements TransactionService
             ->get();
     }
 
+    public function searchTransaction(PageableRequest $request): LengthAwarePaginator
+    {
+
+
+        return Transaction::query()
+            ->when()
+            ->paginate();
+    }
+
+    public function searchTransactionPreparePageable(PageableRequest $request): PageableRequest
+    {
+
+    }
+
     public function dailyIncome(PageableRequest $request): LengthAwarePaginator
     {
 

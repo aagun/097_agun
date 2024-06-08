@@ -16,6 +16,7 @@ use App\Services\DebtService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\SuccessResponseResource;
+use App\Http\Requests\PageableRequest;
 
 class TransactionController extends Controller
 {
@@ -27,6 +28,11 @@ class TransactionController extends Controller
     {
         $this->userService = $userService;
         $this->debtService = $debtService;
+    }
+
+    public function searchTransaction(PageableRequest $request)
+    {
+
     }
 
     public function createBatchTransaction(TransactionBatchRequest $request): Response
